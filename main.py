@@ -1,35 +1,38 @@
 from tkinter import *
 from tkinter import font as tkFont
 import time
+import tkinter.messagebox
 
 root = Tk()  # create window
 
 root.title("Job 1")  # title for window
-root.geometry('302x100') #main window geometry
-#change font size
-largerFont = tkFont.Font(family = 'Helvetica', size=12, weight=tkFont.BOLD)
-# persons = [['Bill', 2, True], ['Faith', 6, False], ['Jake', 11, True], ['Louise', 15, False]]
+root.geometry('302x100')  # main window geometry
+# change font size
+largerFont = tkFont.Font(family='Helvetica', size=12, weight=tkFont.BOLD)
+# persons = [['Joe', 2, True], ['Jose', 7, False], ['Maria', 12, True], ['Mary', 17, False]]
 
 
-lblTest = Label(root, text="Start")
-lblTest.grid(column=1, row=2)
+# def managePersons():
+# print(persons[0][1])
+
+# managePersons()
 
 
-
-#create Timer Window
+timeCount = 0  # counter for the current time
+timerRunning = True
+# create Timer Window
 timeWindow = Toplevel(root)
 timeWindow.title("Timer")
 timeWindow.geometry("200x200+600+00")
-timeNow = Label(timeWindow,text =" ", font=largerFont)
+timeNow = Label(timeWindow, text=" ", font=largerFont)
 timeNow.pack()
 
-#create Log Window
+# create Log Window
 logWindow = Toplevel(root)
 logWindow.title("Log")
 logWindow.geometry("300x300+1000+00")
 
-
-#creation of labels for the Log Window
+# creation of labels for the Log Window
 labelName = Label(logWindow, text="Name              ", font=largerFont)
 labelName.grid(column=1, row=1)
 labelEvent = Label(logWindow, text="Event                ", font=largerFont)
@@ -38,26 +41,43 @@ labelEvent = Label(logWindow, text="Time", font=largerFont)
 labelEvent.grid(column=3, row=1)
 
 
-def current_time():
+def current_time():  # return current internal time no longer needed
     return time.strftime("%H:%M:%S")
+
+
+def convert_time(seconds):  # converts and returns the counter time in format HR:MIN:SEC
+    seconds = seconds % (24 * 3600)
+    hour = seconds // 3600
+    minutes = seconds // 60
+    seconds %= 60
+    return "%d:%02d:%02d" % (hour, minutes, seconds)
+
+
 def manage_time():
-    now = current_time()
-    timeNow.config( text="T: "+now)
+    global timeCount
+    global timerRunning
+    if timerRunning:
+        timeCount += 1
+    timeNow.config(text="T: " + convert_time(timeCount))
     root.after(1000, manage_time)
+
 
 manage_time()
 
+
 # button action listeners
 def clickedpause():
-    lblTest.configure(text="PAUSED")
+    global timerRunning
+    timerRunning = False
 
 
 def clickedunpause():
-    lblTest.configure(text="UNPAUSED")
+    global timerRunning
+    timerRunning = True
 
 
 def clickedend():
-    lblTest.configure(text="END")
+    root.destroy()
 
 
 # button creation
@@ -74,5 +94,5 @@ btnUnPause.grid(column=2, row=1)
 
 btnEnd.grid(column=3, row=1)
 
-# tm.timeClass.run(root)
+# tkinter.messagebox.showinfo('POP UP','NAME')  #this is a test for pop up window
 root.mainloop()
