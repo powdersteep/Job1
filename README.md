@@ -9,3 +9,5 @@ The application has three windows
       
       
 I have also left in a function for getting the current internal time of the system (if it could be necessary in the future) but that can be deleted if you request
+
+I will be working on the functionality of the log file the next time I work on this project
