@@ -6,4 +6,6 @@ The application has three windows
   2. A running timer in format of Hours:Minutes:Seconds
   3. A layout for the log with 
       Worker name  |    Event  |  time
+      
+      
 I have also left in a function for getting the current internal time of the system (if it could be necessary in the future) but that can be deleted if you request
